@@ -1,4 +1,4 @@
-package de.unidue.ltl.eduscoring.testdaf.experiments.essay;
+package de.unidue.ltl.eduscoring.genericessayscoring;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,12 +9,12 @@ import org.dkpro.lab.task.Dimension;
 import org.dkpro.lab.task.ParameterSpace;
 import org.dkpro.tc.core.Constants;
 
-import de.unidue.ltl.eduscoring.testdaf.experiments.Experiments_ImplBase;
-import de.unidue.ltl.eduscoring.testdaf.experiments.FeatureSettings;
-import de.unidue.ltl.eduscoring.testdaf.io.GenericDatasetReader;
+import de.unidue.ltl.eduscoring.genericessayscoring.experiments.Experiments_ImplBase;
+import de.unidue.ltl.eduscoring.genericessayscoring.experiments.FeatureSettings;
+import de.unidue.ltl.eduscoring.genericessayscoring.io.GenericDatasetReader;
 
 
-public class TestDafEssayExperiment extends Experiments_ImplBase implements Constants  {
+public class GenericEssayExperiments extends Experiments_ImplBase implements Constants  {
 
 	/*
 	 * Experimental code should go in here. 
@@ -33,7 +33,7 @@ public class TestDafEssayExperiment extends Experiments_ImplBase implements Cons
 	 */
 	public static void main(String[] args) throws Exception{
 		 runEssayGradingBaselineExperiment("BaselineExperiment_EssayScoring_Example", 
-			System.getenv("DKPRO_HOME")+"/datasets/Experimental_Datasets_EssayScoring/2-1.txt", 
+			System.getenv("DKPRO_HOME")+"/datasets/Experimental_Datasets_EssayScoring/FalkoEssays.txt", 
 				"de",2);
 //		runEssayGradingBaselineExperiment("BaselineExperiment_EssayScoring_Example", 
 //				System.getenv("DKPRO_HOME")+"/datasets/Experimental_Datasets_EssayScoring/alle.txt", 

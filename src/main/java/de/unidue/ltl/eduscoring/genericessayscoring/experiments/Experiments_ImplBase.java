@@ -1,4 +1,4 @@
-package de.unidue.ltl.eduscoring.testdaf.experiments;
+package de.unidue.ltl.eduscoring.genericessayscoring.experiments;
 
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
 
@@ -97,7 +97,7 @@ public abstract class Experiments_ImplBase extends de.unidue.ltl.escrito.example
 //		return mlas;
 //	}
 	public static Dimension<Map<String, Object>> getStandardWekaRegressionArgsDim() {
-		Map<String, Object> config = new HashMap<>();
+		Map<String, Object> config = new HashMap<String, Object>();
 		config.put(DIM_CLASSIFICATION_ARGS, new Object[] { new WekaAdapter(), LinearRegression.class.getName() });
 		config.put(DIM_DATA_WRITER, new WekaAdapter().getDataWriterClass());
 		config.put(DIM_FEATURE_USE_SPARSE, new WekaAdapter().useSparseFeatures());
@@ -207,7 +207,7 @@ public abstract class Experiments_ImplBase extends de.unidue.ltl.escrito.example
 		if (languageCode.equals("en")) {
 			return createEngineDescription(createEngineDescription(segmenter,lemmatizer,posTagger));
 		} else if (languageCode.equals("de")) {
-			return createEngineDescription(createEngineDescription(segmenter,posTagger));
+			return createEngineDescription(createEngineDescription(segmenter,posTagger,lemmatizer));
 		} else {
 			System.err.println("Unknown language code " + languageCode + ". We currently support: en, de");
 			System.exit(-1);

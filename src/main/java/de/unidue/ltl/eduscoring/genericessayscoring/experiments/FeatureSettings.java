@@ -1,4 +1,4 @@
-package de.unidue.ltl.eduscoring.testdaf.experiments;
+package de.unidue.ltl.eduscoring.genericessayscoring.experiments;
 
 import org.apache.uima.fit.descriptor.TypeCapability;
 import org.dkpro.lab.task.Dimension;
@@ -13,6 +13,8 @@ import org.dkpro.tc.features.style.AdjectiveEndingFeatureExtractor;
 import org.dkpro.tc.features.syntax.POSRatioFeatureExtractor;
 import org.dkpro.tc.features.syntax.PronounRatioFeatureExtractor;
 import org.dkpro.tc.features.syntax.QuestionsRatioFeatureExtractor;
+
+import de.unidue.ltl.eduscoring.genericessayscoring.features.SourceNgramOverlapExtractor;
 import de.unidue.ltl.escrito.features.coherencecohesion.NrOfConnectives;
 import de.unidue.ltl.escrito.features.coherencecohesion.PairwiseSentenceSimilarity;
 import de.unidue.ltl.escrito.features.complexity.SyntacticVariability;
@@ -36,7 +38,6 @@ import de.unidue.ltl.escrito.features.occurence.NumberOfSubordinateClauses;
 import de.unidue.ltl.escrito.features.occurence.SpeechThoughtWritingRepresentation;
 import de.unidue.ltl.escrito.features.similarity.EmbeddingSimilarityFeatureExtractor;
 import de.unidue.ltl.escrito.features.similarity.PairwiseFeatureWrapper;
-import de.unidue.ltl.eduscoring.testdaf.features.SourceNgramOverlapExtractor;
 import de.unidue.ltl.escrito.features.similarity.StringSimilarityFeatureExtractor;
 import de.unidue.ltl.escrito.features.similarity.WordOverlapFeatureExtractor;
 
@@ -138,66 +139,67 @@ public class FeatureSettings
 		Dimension<TcFeatureSet> dimFeatureSets = Dimension.create(
 				DIM_FEATURE_SET,
 				new TcFeatureSet(
-//						TcFeatureFactory.create(
-//								WordNGram.class,
-//								WordNGram.PARAM_NGRAM_MIN_N, 1,
-//								WordNGram.PARAM_NGRAM_MAX_N, 3,
-//								WordNGram.PARAM_NGRAM_USE_TOP_K, 10000
-//								),
-//						TcFeatureFactory.create(
-//								PosNGram.class,
-//								PosNGram.PARAM_NGRAM_MIN_N, 1,
-//								PosNGram.PARAM_NGRAM_MAX_N, 3,
-//								PosNGram.PARAM_NGRAM_USE_TOP_K, 10000
-//								),
-//						TcFeatureFactory.create(
-//								SkipWordNGram.class,
-//								SkipWordNGram.PARAM_SKIP_SIZE, 2,
-//								SkipWordNGram.PARAM_NGRAM_MIN_N, 2,
-//								SkipWordNGram.PARAM_NGRAM_MAX_N, 5,
-//								SkipWordNGram.PARAM_NGRAM_USE_TOP_K, 10000
-//								),
-//						// Length
-//						TcFeatureFactory.create(NrOfTokens.class),
-//						TcFeatureFactory.create(NrOfChars.class),
-//						TcFeatureFactory.create(NrOfSentences.class),
-//						TcFeatureFactory.create(AvgNrOfTokensPerSentence.class),
-//						TcFeatureFactory.create(AvgNrOfCharsPerSentence.class),
-//						TcFeatureFactory.create(AvgNrOfCharsPerToken.class),
-//						TcFeatureFactory.create(TokenLengthRatio.class),
+						TcFeatureFactory.create(
+								WordNGram.class,
+								WordNGram.PARAM_NGRAM_MIN_N, 1,
+								WordNGram.PARAM_NGRAM_MAX_N, 3,
+								WordNGram.PARAM_NGRAM_USE_TOP_K, 10000
+								),
+						TcFeatureFactory.create(
+								PosNGram.class,
+								PosNGram.PARAM_NGRAM_MIN_N, 1,
+								PosNGram.PARAM_NGRAM_MAX_N, 3,
+								PosNGram.PARAM_NGRAM_USE_TOP_K, 10000
+								),
+						TcFeatureFactory.create(
+								SkipWordNGram.class,
+								SkipWordNGram.PARAM_SKIP_SIZE, 2,
+								SkipWordNGram.PARAM_NGRAM_MIN_N, 2,
+								SkipWordNGram.PARAM_NGRAM_MAX_N, 5,
+								SkipWordNGram.PARAM_NGRAM_USE_TOP_K, 10000
+								),
+						// Length
+						TcFeatureFactory.create(NrOfTokens.class),
+						TcFeatureFactory.create(NrOfChars.class),
+						TcFeatureFactory.create(NrOfSentences.class),
+						TcFeatureFactory.create(AvgNrOfTokensPerSentence.class),
+						TcFeatureFactory.create(AvgNrOfCharsPerSentence.class),
+						TcFeatureFactory.create(AvgNrOfCharsPerToken.class),
+						TcFeatureFactory.create(TokenLengthRatio.class),
 
-//						TcFeatureFactory.create(POSRatioFeatureExtractor.class),
-//						TcFeatureFactory.create(PronounRatoFeatureExtractor.class),
-//						TcFeatureFactory.create(QuestionsRatioFeatureExtractor.class),
-//						TcFeatureFactory.create(AdjectiveEndingFeatureExtractor.class),
+						TcFeatureFactory.create(POSRatioFeatureExtractor.class),
+						TcFeatureFactory.create(PronounRatioFeatureExtractor.class),
+						TcFeatureFactory.create(QuestionsRatioFeatureExtractor.class),
+						TcFeatureFactory.create(AdjectiveEndingFeatureExtractor.class),
 
-//						TcFeatureFactory.create(NrOfCommas.class),
-//						TcFeatureFactory.create(NumberOfQuotations.class),
-//						TcFeatureFactory.create(
-//								SpeechThoughtWritingRepresentation.class,
-//								SpeechThoughtWritingRepresentation.LANGUAGE,"de",
-//								SpeechThoughtWritingRepresentation.PARAM_REPORTING_VERBS_FILE_PATH, "src/main/resources/lists/de/reporting_verbs_krestel_de.txt"
-//								)
-//						TcFeatureFactory.create(TypeTokenRatioFeatureExtractor.class),
-//						TcFeatureFactory.create(SyntaxTreeDepth.class,
-//								SyntaxTreeDepth.LANGUAGE,"de"),
-//						TcFeatureFactory.create(PassiveSentenceExtractor.class),
-//						TcFeatureFactory.create(PrepositionalPhraseExtractor.class),
-//						TcFeatureFactory.create(SubstantivierungExtractor.class,SubstantivierungExtractor.PARAM_SUFFIXES_FILE_PATH,"src/main/resources/lists/de/noun-forming_suffixes_de.txt")
-//						
+						TcFeatureFactory.create(NrOfCommas.class),
+						TcFeatureFactory.create(NumberOfQuotations.class),
+						TcFeatureFactory.create(
+								SpeechThoughtWritingRepresentation.class,
+								SpeechThoughtWritingRepresentation.LANGUAGE,"de",
+								SpeechThoughtWritingRepresentation.PARAM_REPORTING_VERBS_FILE_PATH, "src/main/resources/lists/de/reporting_verbs_krestel_de.txt"
+								),
+						TcFeatureFactory.create(TypeTokenRatioFeatureExtractor.class),
+						TcFeatureFactory.create(SyntaxTreeDepth.class,
+								SyntaxTreeDepth.LANGUAGE,"de"),
+						TcFeatureFactory.create(PassiveSentenceExtractor.class),
+						TcFeatureFactory.create(PrepositionalPhraseExtractor.class),
+						TcFeatureFactory.create(SubstantivierungExtractor.class,SubstantivierungExtractor.PARAM_SUFFIXES_FILE_PATH,"src/main/resources/lists/de/noun-forming_suffixes_de.txt"),
+						
 ////						
 						
-//						TcFeatureFactory.create(
-//								NumberOfSubordinateClauses.class,
-//								NumberOfSubordinateClauses.PARAM_LANGUAGE,"de",
-//								NumberOfSubordinateClauses.PARAM_CAUSAL_INDICATORS_FILE_PATH, "src/main/resources/lists/de/causalIndicators_de.txt",
-//								NumberOfSubordinateClauses.PARAM_TEMPORAL_INDICATORS_FILE_PATH, "src/main/resources/lists/de/temporalIndicators_de.txt")
-//								//NumberOfSubordinateClauses.@TypeCapability, "de.tudarmstadt.ukp.dkpro.core.api.syntax.type.constituent.Constituent"),
-//						TcFeatureFactory.create(SyntacticVariability.class),
-//						TcFeatureFactory.create(TraditionalReadabilityMeasures.class),
-//						TcFeatureFactory.create(NumberOfGrammarMistakes.class,NumberOfGrammarMistakes.PARAM_INPUT_LOCATION,"src/main/resources/lists/de/grammarMistakes.txt"),
+						TcFeatureFactory.create(
+								NumberOfSubordinateClauses.class,
+								NumberOfSubordinateClauses.PARAM_LANGUAGE,"de",
+								NumberOfSubordinateClauses.PARAM_CAUSAL_INDICATORS_FILE_PATH, "src/main/resources/lists/de/causalIndicators_de.txt",
+								NumberOfSubordinateClauses.PARAM_TEMPORAL_INDICATORS_FILE_PATH, "src/main/resources/lists/de/temporalIndicators_de.txt"),
+								//NumberOfSubordinateClauses.@TypeCapability, "de.tudarmstadt.ukp.dkpro.core.api.syntax.type.constituent.Constituent"),
+						TcFeatureFactory.create(SyntacticVariability.class),
+						TcFeatureFactory.create(TraditionalReadabilityMeasures.class),
+						//Errors
+						TcFeatureFactory.create(NumberOfGrammarMistakes.class,NumberOfGrammarMistakes.PARAM_INPUT_LOCATION,"src/main/resources/lists/de/grammarMistakes.txt"),
 						//TcFeatureFactory.create(PromptOverlapExtractor.class,PromptOverlapExtractor.PARAM_SOURCE_NGRAM_LOCATION,"src/main/resources/lists/de/aufgabensource_text_1_1.txt")
-					   //TcFeatureFactory.create(NumberOfSpellingErrors.class, NumberOfSpellingErrors.PARAM_DICT_PATH,"src/main/resources/lists/de/germanDictionary_Task1_Task2.txt"),
+					    //TcFeatureFactory.create(NumberOfSpellingErrors.class, NumberOfSpellingErrors.PARAM_DICT_PATH,"src/main/resources/lists/de/germanDictionary_Task1_Task2.txt"),
 					   TcFeatureFactory.create(
 								SourceNgramOverlapExtractor.class,
 								SourceNgramOverlapExtractor.PARAM_SOURCE_NGRAM_LOCATION,"src/main/resources/lists/de/aufgaben/source_text_2_1.txt",

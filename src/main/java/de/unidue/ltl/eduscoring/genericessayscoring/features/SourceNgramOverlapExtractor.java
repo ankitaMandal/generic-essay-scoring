@@ -1,4 +1,4 @@
-package de.unidue.ltl.eduscoring.testdaf.features;
+package de.unidue.ltl.eduscoring.genericessayscoring.features;
 
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngine;
 import static org.apache.uima.fit.factory.AnalysisEngineFactory.createEngineDescription;
@@ -218,15 +218,15 @@ implements FeatureExtractor{
 	private static boolean hasContentWord(List<String> ngram, List<String> strings, List<String> postags) {
 			int index=Collections.indexOfSubList(strings , ngram);
 			int contentWords=0;
-			System.out.println("strings: "+strings);
-			System.out.println("postags: "+postags);
-			System.out.println("ngram: "+ngram);
-			System.out.println(index);
+//			System.out.println("strings: "+strings);
+//			System.out.println("postags: "+postags);
+//			System.out.println("ngram: "+ngram);
+//			System.out.println(index);
 			for(int i=index;i<(index+ngram.size());i++){
 				if(StringUtils.containsIgnoreCase(contentPOS, postags.get(i)))
 					contentWords++;						
 			}
-			System.out.println(contentWords);
+//			System.out.println(contentWords);
 //			
 //			System.out.println(contentPOS);
 			if(contentWords>0)
