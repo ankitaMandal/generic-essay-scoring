@@ -18,5 +18,5 @@ The project uses Java 1.8. You need to set a DKPRO_HOME variable as described he
 
 <strong>References</strong>:
 
-1. Zesch, Torsten, and Andrea Horbach. “ESCRITO - An NLP-Enhanced Educational Scoring Toolkit.” Proceedings of the Eleventh International Conference on Language Resources and Evaluation (LREC 2018), 2018.
+1. Zesch, Torsten, and Horbach, Andrea. “ESCRITO - An NLP-Enhanced Educational Scoring Toolkit.” Proceedings of the Eleventh International Conference on Language Resources and Evaluation (LREC 2018), 2018.
 2. Eckart de Castilho, R. and Gurevych, I. (2014). A broad-coverage collection of portable NLP components for building shareable analysis pipelines. In Proceedings of the Workshop on Open Infrastructures and Analysis Frameworks for HLT (OIAF4HLT) at COLING 2014, p 1-11, Dublin, Ireland.
