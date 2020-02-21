@@ -12,7 +12,7 @@
 
 The experiments are run using DKPro (https://dkpro.github.io/) based Escrito framework (https://github.com/ltl-ude/escrito). 
 
-Prerequisites
+Prerequisites \\
 The project uses Java 1.8. You need to set a DKPRO_HOME variable as described here https://zoidberg.ukp.informatik.tu-darmstadt.de/jenkins/job/DKPro%20TC%20Documentation%20(GitHub)/org.dkpro.tc%24dkpro-tc-doc/doclinks/1/#QuickStart
 
 
