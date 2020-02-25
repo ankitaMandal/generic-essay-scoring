@@ -1,7 +1,7 @@
 # generic-essay-scoring
 Essay Scoring experiments on the following datasets: 
 |#| Data Set     | language      | # essays| # prompts | scores |
-|--|:-------------: |:-------------: | :-------:|-------|:-----:|
+|:---:|:-------------: |:-------------: | :-------:|:-------:|:-----:|
 | 1. |Falko       | German | 248 | 4 | 1-3 |
 | 2. |TestDaF       | German | 818 | 4 | 0-5  |
 | 3. |ICLE       | English |  |  |  |
