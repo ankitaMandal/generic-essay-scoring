@@ -1,16 +1,15 @@
 # generic-essay-scoring
 Essay Scoring experiments on the following datasets: 
 |#| Data Set     | language      | # essays| # prompts | scores |
-|--|------------- |------------- | -------|-------|-----|
+|--|:-------------: |:-------------: | :-------:|-------|:-----:|
 | 1. |Falko       | German | 248 | 4 | 1-3 |
 | 2. |TestDaF       | German | 818 | 4 | 0-5  |
 | 3. |ICLE       | English |  |  |  |
-| 5. |ICNALE       | English | 5419 | 2 | 1-4 |
-| 6. |MEWS       | English | 2720 | 4 | 0-5 |
-| 7. |SWELL       | Swedish |  |  | |
-| 8. |COPLE2       | Portuguese | 966 | 131 | 1-5 |
+| 4. |ICNALE       | English | 5419 | 2 | 1-4 |
+| 5. |MEWS       | English | 2720 | 4 | 0-5 |
+| 6. |SWELL       | Swedish |  |  | |
+| 7. |COPLE2       | Portuguese | 966 | 131 | 1-5 |
 
- 
 
 The experiments are run using DKPro (https://dkpro.github.io/) based Escrito framework (https://github.com/ltl-ude/escrito). 
 
