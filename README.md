@@ -2,7 +2,7 @@
 Essay Scoring experiments on the following datasets: 
 |#| Data Set     | language      | # essays| # prompts | scores |
 |:---:|:-------------: |:-------------: | :-------:|:-------:|:-----:|
-| 1. |Falko       | German | 248 | 4 | 1-3 |
+| 1. |Falko       | German | 248 | 4 | B2-C2 |
 | 2. |TestDaF       | German |  | 12 | 0-5  |
 | 3. |ASAP       | English |  12978 | 8 | various |
 | 4. |ICNALE       | English | 5419 | 2 | 1-4 |
