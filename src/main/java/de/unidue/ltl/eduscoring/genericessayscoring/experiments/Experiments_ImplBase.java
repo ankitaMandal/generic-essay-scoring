@@ -35,6 +35,7 @@ import weka.classifiers.functions.SMO;
 import weka.clusterers.SimpleKMeans;
 import de.tudarmstadt.ukp.dkpro.core.berkeleyparser.BerkeleyParser;
 import de.tudarmstadt.ukp.dkpro.core.clearnlp.ClearNlpLemmatizer;
+//import  de.tudarmstadt.ukp.dkpro.core.languagetool.LanguageToolLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.clearnlp.ClearNlpParser;
 import de.tudarmstadt.ukp.dkpro.core.clearnlp.ClearNlpSegmenter;
 import de.tudarmstadt.ukp.dkpro.core.io.bincas.BinaryCasWriter;
@@ -183,6 +184,7 @@ public abstract class Experiments_ImplBase extends de.unidue.ltl.escrito.example
 		AnalysisEngineDescription chunker = createEngineDescription(OpenNlpChunker.class);
 		//AnalysisEngineDescription lemmatizer = createEngineDescription(MateLemmatizer.class);
 		AnalysisEngineDescription lemmatizer = createEngineDescription(NoOpAnnotator.class);
+//		AnalysisEngineDescription lemmatizerpt = createEngineDescription(LanguageToolLemmatizer.class);
 		//AnalysisEngineDescription tagger = createEngineDescription(NoOpAnnotator.class);
 
 //		AnalysisEngineDescription parserEN = createEngineDescription(NoOpAnnotator.class);
@@ -203,11 +205,14 @@ public abstract class Experiments_ImplBase extends de.unidue.ltl.escrito.example
 		//return createEngineDescription(createEngineDescription(ClearNlpSegmenter.class), posTagger, lemmatizer);
 		
 		if (languageCode.equals("en")) {
-			return createEngineDescription(createEngineDescription(segmenter,lemmatizer,posTagger));
+			return createEngineDescription(createEngineDescription(segmenter,posTagger,lemmatizer));
 		} else if (languageCode.equals("de")) {
 			return createEngineDescription(createEngineDescription(segmenter,posTagger,lemmatizer));
-		} else {
-			System.err.println("Unknown language code " + languageCode + ". We currently support: en, de");
+		
+		} else if (languageCode.equals("pt")) {
+		   return createEngineDescription(createEngineDescription(segmenter,posTagger));
+		}else {
+			System.err.println("Unknown language code " + languageCode + ". We currently support: en, de, pt");
 			System.exit(-1);
 		}
 		return null;
