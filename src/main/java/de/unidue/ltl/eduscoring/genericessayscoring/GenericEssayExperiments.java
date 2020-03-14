@@ -32,9 +32,9 @@ public class GenericEssayExperiments extends Experiments_ImplBase implements Con
 	 * 
 	 */
 	public static void main(String[] args) throws Exception{
-		 runEssayGradingBaselineExperiment("BaselineExperiment_EssayScoring_Example", 
-			System.getenv("DKPRO_HOME")+"/datasets/Experimental_Datasets_EssayScoring/FalkoEssays.txt", 
-				"de",2);
+		 runEssayGradingBaselineExperiment("BaselineExperiment_EssayScoring_Example_ICNALE_SMK_NGrams", 
+			System.getenv("DKPRO_HOME")+"/datasets/Experimental_Datasets_EssayScoring/ICNALE_SMK.txt", 
+				"en",2);
 //		runEssayGradingBaselineExperiment("BaselineExperiment_EssayScoring_Example", 
 //				System.getenv("DKPRO_HOME")+"/datasets/Experimental_Datasets_EssayScoring/alle.txt", 
 //					System.getenv("DKPRO_HOME")+"/datasets/Experimental_Datasets_EssayScoring/1-1.txt",
@@ -55,7 +55,7 @@ public class GenericEssayExperiments extends Experiments_ImplBase implements Con
 	                GenericDatasetReader.PARAM_INPUT_FILE,trainData,
 	                GenericDatasetReader.PARAM_IGNORE_FIRST_LINE, true,
 	                GenericDatasetReader.PARAM_ENCODING, "UTF-8",
-	                GenericDatasetReader.PARAM_LANGUAGE, "de",
+	                GenericDatasetReader.PARAM_LANGUAGE, "en",
 	                GenericDatasetReader.PARAM_SEPARATOR, "\t",
 	                GenericDatasetReader.PARAM_QUESTION_PREFIX, "Q",
 	                GenericDatasetReader.PARAM_TARGET_ANSWER_PREFIX, "TA",
@@ -85,7 +85,7 @@ public class GenericEssayExperiments extends Experiments_ImplBase implements Con
 		                GenericDatasetReader.PARAM_INPUT_FILE,trainData,
 		                GenericDatasetReader.PARAM_IGNORE_FIRST_LINE, true,
 		                GenericDatasetReader.PARAM_ENCODING, "UTF-8",
-		                GenericDatasetReader.PARAM_LANGUAGE, "pt",
+		                GenericDatasetReader.PARAM_LANGUAGE, "en",
 		                GenericDatasetReader.PARAM_SEPARATOR, "\t",
 		                GenericDatasetReader.PARAM_QUESTION_PREFIX, "Q",
 		                GenericDatasetReader.PARAM_TARGET_ANSWER_PREFIX, "TA",
@@ -98,7 +98,7 @@ public class GenericEssayExperiments extends Experiments_ImplBase implements Con
 		                GenericDatasetReader.PARAM_INPUT_FILE,testData,
 		                GenericDatasetReader.PARAM_IGNORE_FIRST_LINE, true,
 		                GenericDatasetReader.PARAM_ENCODING, "UTF-8",
-		                GenericDatasetReader.PARAM_LANGUAGE, "pt",
+		                GenericDatasetReader.PARAM_LANGUAGE, "en",
 		                GenericDatasetReader.PARAM_SEPARATOR, "\t",
 		                GenericDatasetReader.PARAM_QUESTION_PREFIX, "Q",
 		                GenericDatasetReader.PARAM_TARGET_ANSWER_PREFIX, "TA",

@@ -155,15 +155,15 @@ public class FeatureSettings
 								SkipWordNGram.PARAM_NGRAM_MIN_N, 2,
 								SkipWordNGram.PARAM_NGRAM_MAX_N, 5,
 								SkipWordNGram.PARAM_NGRAM_USE_TOP_K, 10000
-								),
+								)
 						// Length
-						TcFeatureFactory.create(NrOfTokens.class),
-						TcFeatureFactory.create(NrOfChars.class),
-						TcFeatureFactory.create(NrOfSentences.class),
-						TcFeatureFactory.create(AvgNrOfTokensPerSentence.class),
-						TcFeatureFactory.create(AvgNrOfCharsPerSentence.class),
-						TcFeatureFactory.create(AvgNrOfCharsPerToken.class),
-						TcFeatureFactory.create(TokenLengthRatio.class)
+//						TcFeatureFactory.create(NrOfTokens.class),
+//						TcFeatureFactory.create(NrOfChars.class),
+//						TcFeatureFactory.create(NrOfSentences.class),
+//						TcFeatureFactory.create(AvgNrOfTokensPerSentence.class),
+//						TcFeatureFactory.create(AvgNrOfCharsPerSentence.class),
+//						TcFeatureFactory.create(AvgNrOfCharsPerToken.class),
+//						TcFeatureFactory.create(TokenLengthRatio.class)
 
 //						TcFeatureFactory.create(POSRatioFeatureExtractor.class),
 //						TcFeatureFactory.create(PronounRatioFeatureExtractor.class),
