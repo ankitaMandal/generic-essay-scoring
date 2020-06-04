@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-//import de.tudarmstadt.ukp.dkpro.core.api.syntax.type.PennTree;
+
 import org.apache.uima.analysis_engine.AnalysisEngineDescription;
 import org.apache.uima.collection.CollectionReaderDescription;
 import org.apache.uima.fit.component.NoOpAnnotator;
@@ -23,6 +23,7 @@ import org.dkpro.tc.features.ngram.CharacterNGram;
 import org.dkpro.tc.features.ngram.PosNGram;
 import org.dkpro.tc.features.ngram.SkipWordNGram;
 import org.dkpro.tc.features.ngram.WordNGram;
+import org.dkpro.tc.features.syntax.POSRatioFeatureExtractor;
 import org.dkpro.tc.ml.experiment.ExperimentCrossValidation;
 import org.dkpro.tc.ml.experiment.ExperimentTrainTest;
 //import org.dkpro.tc.ml.libsvm.LibsvmAdapter;
@@ -34,13 +35,16 @@ import weka.classifiers.functions.LinearRegression;
 import weka.classifiers.functions.SMO;
 import weka.clusterers.SimpleKMeans;
 import de.tudarmstadt.ukp.dkpro.core.berkeleyparser.BerkeleyParser;
-import de.tudarmstadt.ukp.dkpro.core.clearnlp.ClearNlpLemmatizer;
+//import de.tudarmstadt.ukp.dkpro.core.berkeleyparser.BerkeleyParser;
+//import de.tudarmstadt.ukp.dkpro.core.clearnlp.ClearNlpLemmatizer;
+//import de.tudarmstadt.ukp.dkpro.core.api.syntax.type.PennTree;
 //import  de.tudarmstadt.ukp.dkpro.core.languagetool.LanguageToolLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.clearnlp.ClearNlpParser;
 import de.tudarmstadt.ukp.dkpro.core.clearnlp.ClearNlpSegmenter;
 import de.tudarmstadt.ukp.dkpro.core.io.bincas.BinaryCasWriter;
 import de.tudarmstadt.ukp.dkpro.core.matetools.MateLemmatizer;
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpChunker;
+import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpParser;
 import de.tudarmstadt.ukp.dkpro.core.opennlp.OpenNlpPosTagger;
 import de.tudarmstadt.ukp.dkpro.core.tokit.BreakIteratorSegmenter;
 import de.unidue.ltl.escrito.core.report.CvEvaluationReport;
@@ -51,20 +55,19 @@ import de.unidue.ltl.eduscoring.testdaf.features.EditDifferencesWithContextFeatu
 import de.unidue.ltl.eduscoring.testdaf.features.ErrorExtractor;
 import de.unidue.ltl.eduscoring.testdaf.features.SourceNgramOverlapExtractor;*/
 import de.unidue.ltl.escrito.examples.basics.FeatureSettings;
+import de.unidue.ltl.escrito.features.complexity.TypeTokenRatioFeatureExtractor;
+import de.unidue.ltl.escrito.features.length.AvgNrOfCharsPerSentence;
+import de.unidue.ltl.escrito.features.length.AvgNrOfTokensPerSentence;
+import de.unidue.ltl.escrito.features.length.NrOfSentences;
 import de.unidue.ltl.escrito.features.length.NrOfTokens;
 import de.unidue.ltl.escrito.features.similarity.PairwiseFeatureWrapper;
+//import edu.stanford.nlp.pipeline.ParserAnnotator;
 
 public abstract class Experiments_ImplBase extends de.unidue.ltl.escrito.examples.basics.Experiments_ImplBase
 		implements Constants {
 
 	public enum Setting {
-		ngram_10,
-		ngram_100,
-		ngram_1000,
-		ngram_10000,
-		ngram_100000,
-		full_1000,
-		full_10000
+		ngram_10, ngram_100, ngram_1000, ngram_10000, ngram_100000, full_1000, full_10000
 	}
 
 	public static final Boolean[] toLowerCase = new Boolean[] { true };
@@ -74,7 +77,6 @@ public abstract class Experiments_ImplBase extends de.unidue.ltl.escrito.example
 	// "classpath:/stopwords/english_empty.txt";
 
 	public static final String SPELLING_VOCABULARY = "classpath:/vocabulary/en_US_dict.txt";
-
 
 	@SuppressWarnings("unchecked")
 	public static Dimension<Map<String, Object>> getWekaClassificationArgsDim() {
@@ -104,6 +106,26 @@ public abstract class Experiments_ImplBase extends de.unidue.ltl.escrito.example
 		return mlas;
 	}
 
+	// new approach on traintest method
+
+	public static Dimension<TcFeatureSet> getVeryBasicFeatureSetsDim() {
+		Dimension<TcFeatureSet> dimFeatureSets = Dimension.create(DIM_FEATURE_SET,
+				new TcFeatureSet(TcFeatureFactory.create(NrOfTokens.class),
+						TcFeatureFactory.create(NrOfSentences.class),
+						TcFeatureFactory.create(AvgNrOfCharsPerSentence.class),
+						TcFeatureFactory.create(AvgNrOfTokensPerSentence.class),
+						TcFeatureFactory.create(AvgNrOfCharsPerSentence.class),
+						TcFeatureFactory.create(POSRatioFeatureExtractor.class),
+						TcFeatureFactory.create(TypeTokenRatioFeatureExtractor.class),
+						// getRutaFeature(),
+						// getFrequencyFeatures(),
+						getNGramFeature(1, 3, 10000)
+				// getCharacterNGramFeature(2, 4, 10000),
+				// getPOSNGramFeature(1,3,1000)
+				));
+		return dimFeatureSets;
+	}
+
 	public static Dimension<TcFeatureSet> getFeatureSetsDim() {
 		System.out.println(10);
 		Dimension<TcFeatureSet> dimFeatureSets = Dimension.create(DIM_FEATURE_SET, new TcFeatureSet(
@@ -117,7 +139,6 @@ public abstract class Experiments_ImplBase extends de.unidue.ltl.escrito.example
 				getNrOfTokensFeature(), getNGramFeature(1, 3, numNGrams), getCharacterNGramFeature(2, 4, numNGrams)));
 		return dimFeatureSets;
 	}
-
 
 	public static TcFeature getNrOfTokensFeature() {
 		return TcFeatureFactory.create(NrOfTokens.class);
@@ -154,7 +175,6 @@ public abstract class Experiments_ImplBase extends de.unidue.ltl.escrito.example
 				System.getenv("DKPRO_HOME") + "/processedData/" + corpusName);
 	}
 
-
 	@SuppressWarnings("unchecked")
 	public static void runClusteringExperiment(String experimentName, CollectionReaderDescription readerTrain,
 			int numClustersMin, int numClustersMax, String languageCode) throws Exception {
@@ -176,22 +196,28 @@ public abstract class Experiments_ImplBase extends de.unidue.ltl.escrito.example
 		runClustering(pSpace, experimentName, languageCode);
 	}
 
+	public static AnalysisEngineDescription getPreprocessingDummy() throws ResourceInitializationException {
+		return createEngineDescription(createEngineDescription(NoOpAnnotator.class));
+	}
+
 	// TODO: make preprocessing dependent on the feature extraction used
 	public static AnalysisEngineDescription getPreprocessing(String languageCode)
 			throws ResourceInitializationException {
 		AnalysisEngineDescription segmenter = createEngineDescription(BreakIteratorSegmenter.class);
 		AnalysisEngineDescription posTagger = createEngineDescription(OpenNlpPosTagger.class);
 		AnalysisEngineDescription chunker = createEngineDescription(OpenNlpChunker.class);
-		//AnalysisEngineDescription lemmatizer = createEngineDescription(MateLemmatizer.class);
+		// AnalysisEngineDescription lemmatizer =
+		// createEngineDescription(MateLemmatizer.class);
 		AnalysisEngineDescription lemmatizer = createEngineDescription(NoOpAnnotator.class);
 //		AnalysisEngineDescription lemmatizerpt = createEngineDescription(LanguageToolLemmatizer.class);
-		//AnalysisEngineDescription tagger = createEngineDescription(NoOpAnnotator.class);
+		// AnalysisEngineDescription tagger =
+		// createEngineDescription(NoOpAnnotator.class);
 
-//		AnalysisEngineDescription parserEN = createEngineDescription(NoOpAnnotator.class);
+		AnalysisEngineDescription parserEN = createEngineDescription(NoOpAnnotator.class);
 //		System.out.println("Setting up Berkeley Parser");
-//		AnalysisEngineDescription parserDE = createEngineDescription(BerkeleyParser.class,
-//				BerkeleyParser.PARAM_LANGUAGE,"de",BerkeleyParser.PARAM_WRITE_PENN_TREE,true, BerkeleyParser.PARAM_WRITE_POS, true 
-//                , BerkeleyParser.PARAM_READ_POS, false);
+		AnalysisEngineDescription parser = createEngineDescription(BerkeleyParser.class,
+				BerkeleyParser.PARAM_LANGUAGE, languageCode, BerkeleyParser.PARAM_WRITE_PENN_TREE, true, BerkeleyParser.PARAM_WRITE_POS, true 
+                , BerkeleyParser.PARAM_READ_POS, false);
 //		AnalysisEngineDescription writer = createEngineDescription(
 //				BinaryCasWriter.class, 
 //				BinaryCasWriter.PARAM_FORMAT, "6+",
@@ -200,54 +226,68 @@ public abstract class Experiments_ImplBase extends de.unidue.ltl.escrito.example
 //				);
 		posTagger = createEngineDescription(OpenNlpPosTagger.class, OpenNlpPosTagger.PARAM_LANGUAGE, languageCode);
 		lemmatizer = createEngineDescription(MateLemmatizer.class);
-//		//parserEN = createEngineDescription(ClearNlpParser.class, ClearNlpParser.PARAM_LANGUAGE, languageCode,
-//				ClearNlpParser.PARAM_VARIANT, "ontonotes");
-		//return createEngineDescription(createEngineDescription(ClearNlpSegmenter.class), posTagger, lemmatizer);
-		
+		parserEN = createEngineDescription(OpenNlpParser.class, ClearNlpParser.PARAM_LANGUAGE, languageCode,
+				ClearNlpParser.PARAM_VARIANT, "ontonotes");
+		// return
+		// createEngineDescription(createEngineDescription(ClearNlpSegmenter.class),
+		// posTagger, lemmatizer);
+
 		if (languageCode.equals("en")) {
-			return createEngineDescription(createEngineDescription(segmenter,posTagger,lemmatizer));
+			return createEngineDescription(createEngineDescription(segmenter, posTagger, lemmatizer, parser));
 		} else if (languageCode.equals("de")) {
-			return createEngineDescription(createEngineDescription(segmenter,posTagger,lemmatizer));
-		
+			return createEngineDescription(createEngineDescription(segmenter, posTagger, lemmatizer, parser));
+
 		} else if (languageCode.equals("pt")) {
-		   return createEngineDescription(createEngineDescription(segmenter,posTagger));
-		}else {
+			return createEngineDescription(createEngineDescription(segmenter, posTagger));
+		} else {
 			System.err.println("Unknown language code " + languageCode + ". We currently support: en, de, pt");
 			System.exit(-1);
 		}
 		return null;
 	}
+
 	// ######### EXPERIMENTAL SETUPS ##########
-		// ##### TRAIN-TEST #####
-		protected static void runTrainTest(ParameterSpace pSpace, String name, AnalysisEngineDescription aed)
-				throws Exception {
-			System.out.println("Running experiment " + name);
-			ExperimentTrainTest batch = new ExperimentTrainTest(name + "-TrainTest");
-			batch.setPreprocessing(aed);
-			// batch.addInnerReport(GradingEvaluationReport.class);
-			batch.setParameterSpace(pSpace);
-			batch.setExecutionPolicy(ExecutionPolicy.RUN_AGAIN);
-			//batch.addReport(GradingEvaluationReport.class);
-			batch.addReport(TrainTestReport.class);
-			// Run
-			Lab.getInstance().run(batch);
-		}
+	// ##### TRAIN-TEST #####
+	protected static void runTrainTest(ParameterSpace pSpace, String name, AnalysisEngineDescription aed)
+			throws Exception {
+		System.out.println("Running experiment " + name);
+		ExperimentTrainTest batch = new ExperimentTrainTest(name + "-TrainTest");
+		batch.setPreprocessing(aed);
+		// batch.addInnerReport(GradingEvaluationReport.class);
+		batch.setParameterSpace(pSpace);
+		batch.setExecutionPolicy(ExecutionPolicy.RUN_AGAIN);
+		batch.addReport(GradingEvaluationReport.class);
+		batch.addReport(TrainTestReport.class);
+		// Run
+		Lab.getInstance().run(batch);
 
-		// ##### CV #####
-		protected static void runCrossValidation(ParameterSpace pSpace, String name, AnalysisEngineDescription aed,
-				int numFolds) throws Exception {
-			ExperimentCrossValidation batch = new ExperimentCrossValidation(name + "-CV", numFolds);
-			batch.setPreprocessing(aed);
-			// TODO: adapt so that it also works from this slightly different context
-			// batch.addInnerReport(GradingEvaluationReport.class);
-			batch.setParameterSpace(pSpace);
-			batch.setExecutionPolicy(ExecutionPolicy.RUN_AGAIN);
-			batch.addReport(CrossValidationReport.class);
-			batch.addReport(CvEvaluationReport.class);
+//			System.out.println("Running experiment " + name);
+//			ExperimentTrainTest batch = new ExperimentTrainTest(name + "-TrainTest");
+//			batch.setPreprocessing(aed);
+//			// batch.addInnerReport(GradingEvaluationReport.class);
+//			batch.setParameterSpace(pSpace);
+//			batch.setExecutionPolicy(ExecutionPolicy.RUN_AGAIN);
+//			//batch.addReport(GradingEvaluationReport.class);
+//			batch.addReport(TrainTestReport.class);
+//			// Run
+//			Lab.getInstance().run(batch);
+	}
 
-			// Run
-			System.out.println(batch);
-			Lab.getInstance().run(batch);
-		}
+	// ##### CV #####
+	protected static void runCrossValidation(ParameterSpace pSpace, String name, AnalysisEngineDescription aed,
+			int numFolds) throws Exception {
+		ExperimentCrossValidation batch = new ExperimentCrossValidation(name + "-CV", numFolds);
+		batch.setPreprocessing(aed);
+		// TODO: adapt so that it also works from this slightly different context
+		// batch.addInnerReport(GradingEvaluationReport.class);
+		batch.setParameterSpace(pSpace);
+		batch.setExecutionPolicy(ExecutionPolicy.RUN_AGAIN);
+		batch.addReport(CrossValidationReport.class);
+		batch.addReport(CvEvaluationReport.class);
+
+		// Run
+		System.out.println(batch);
+		Lab.getInstance().run(batch);
+	}
 
 }
